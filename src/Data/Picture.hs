@@ -12,17 +12,20 @@ Stability   : experimental
 Portability : POSIX
 -}
 module Data.Picture ( Picture
+                    -- * Manipulation functions
                     , grayscale
-                    , readPicture
-                    , fromImage
-                    , toImage
-                    , writePicturePng
                     , fade
                     , rotate
                     , contrast
                     , brightness
                     , gamma
                     , invert
+                    -- * Converting between Image and Picture
+                    , fromImage
+                    , toImage
+                    -- * IO operations
+                    , readPicture
+                    , writePicturePng
                     )
   where
 
