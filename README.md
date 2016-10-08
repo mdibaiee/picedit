@@ -24,8 +24,8 @@ Example:
 stack exec picedit -- dreamboy.jpg --grayscale --contrast 180 --gamma 2 --rotate 180
 ```
 
-![dreamboy](https://github.com/mdibaiee/picedit/blob/master/dreamboy.jpg?raw=true)
-![output](https://github.com/mdibaiee/picedit/blob/master/output.png?raw=true)
+<img width='45%' src='https://github.com/mdibaiee/picedit/blob/master/dreamboy.jpg?raw=true' />
+<img width='45%' src='https://github.com/mdibaiee/picedit/blob/master/output.png?raw=true />
 
 Library
 -------
