@@ -3,15 +3,16 @@
 {-# LANGUAGE TypeFamilies #-}
 
 {-|
-Module      : Picture
-Description : manipulation functions
+Module      : Data.Picture
+Description : picture manipulation functions
 Copyright   : (c) Mahdi Dibaiee, 2016
 License     : GPL-3
 Maintainer  : mdibaiee@aol.com
 Stability   : experimental
 Portability : POSIX
 -}
-module Data.Picture ( grayscale
+module Data.Picture ( Picture
+                    , grayscale
                     , readPicture
                     , fromImage
                     , toImage
@@ -31,10 +32,10 @@ module Data.Picture ( grayscale
     import System.IO
     import Data.Maybe
 
-    -- | 'Picture' type is just a triple of color channel matrices: (R, G, B)
+    -- | (R, G, B) color channels
     type Picture = (Matrix Double, Matrix Double, Matrix Double)
 
-    -- |Converts a JuicyPixel 'Image PixelRGB8' to 'Picture'
+    -- | Converts a JuicyPixel 'Image PixelRGB8' to 'Picture'
     fromImage :: Image PixelRGB8 -> Picture
     fromImage Image { imageWidth = w, imageHeight = h, imageData = vec } =
      let [r, g, b] = map (reshape w . V.fromList . reverse) (snd $ V.foldl' gp (0, [[],[],[]]) (V.map fromIntegral vec))
@@ -46,7 +47,7 @@ module Data.Picture ( grayscale
            (1, [r, g, b]) -> (2, [r, x:g, b])
            (2, [r, g, b]) -> (0, [r, g, x:b])
 
-    -- |Converts a 'Picture' to JuicyPixel 'Image PixelRGB8'
+    -- | Converts a 'Picture' to JuicyPixel 'Image PixelRGB8'
     toImage :: Picture -> Image PixelRGB8
     toImage (r, g, b) = 
       let (fr, fg, fb) = (toList $ flatten r, toList $ flatten g, toList $ flatten b)
