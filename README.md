@@ -19,6 +19,14 @@ Options:
   --output <filename> - output name, defaults to 'output.png'
 ```
 
+Example:
+```
+stack exec picedit -- dreamboy.jpg --grayscale --contrast 180 --gamma 2 --rotate 180
+```
+
+![dreamboy](https://github.com/mdibaiee/picedit/blob/master/dreamboy.jpg?raw=true)
+![output](https://github.com/mdibaiee/picedit/blob/master/output.png?raw=true)
+
 Library
 -------
 [Documentation available at hackage](https://hackage.haskell.org/package/picedit-0.1.0.0/docs/Data-Picture.html)
