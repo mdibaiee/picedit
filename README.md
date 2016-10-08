@@ -25,7 +25,7 @@ stack exec picedit -- dreamboy.jpg --grayscale --contrast 180 --gamma 2 --rotate
 ```
 
 <img width='45%' src='https://github.com/mdibaiee/picedit/blob/master/dreamboy.jpg?raw=true' />
-<img width='45%' src='https://github.com/mdibaiee/picedit/blob/master/output.png?raw=true />
+<img width='45%' src='https://github.com/mdibaiee/picedit/blob/master/output.png?raw=true' />
 
 Library
 -------
