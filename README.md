@@ -16,6 +16,9 @@ Options:
   --rotate <n> - rotate image by n degrees
   --grayscale - turn the image grayscale
   --invert - invert (negative) the image
+  --compress <n> - approximate the (width - n)-th rank of image using SVD
+                   a number between 0 (no compression) and image width (full compression)
+                   note: this is not size compression
   --output <filename> - output name, defaults to 'output.png'
 ```
 

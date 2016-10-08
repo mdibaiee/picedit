@@ -20,6 +20,7 @@ module Data.Picture ( Picture
                     , brightness
                     , gamma
                     , invert
+                    , compress
                     -- * Converting between Image and Picture
                     , fromImage
                     , toImage
@@ -34,6 +35,7 @@ module Data.Picture ( Picture
     import qualified Data.Vector.Storable as V
     import System.IO
     import Data.Maybe
+    import Debug.Trace
 
     -- | (R, G, B) color channels
     type Picture = (Matrix Double, Matrix Double, Matrix Double)
@@ -108,9 +110,8 @@ module Data.Picture ( Picture
       where
         f = cmap (`subtract` 255)
 
-    {- | Rotate 'Picture' for the specified degrees, around the specified origin.
-     - If the origin is `Nothing`, rotates around the center
-     -}
+    -- | Rotate 'Picture' for the specified degrees, around the specified origin.
+    -- If the origin is `Nothing`, rotates around the center
     rotate :: Double -> Maybe (Int, Int) -> Picture -> Picture
     rotate deg orig (r, g, b) = (f r, f g, f b)
       where
@@ -134,6 +135,18 @@ module Data.Picture ( Picture
         movedIndices = map (\[x, y] -> [x + originX, y + originY]) rotatedIndices
 
         f m = reshape (cols m) $ fromList $ map (\[x, y] -> if y < 0 || y >= rows r || x < 0 || x >= cols r then 255 else m `atIndex` (y, x)) movedIndices
+
+    -- | Compress the image using SVD
+    -- note: this is not size compression, it's just a k-rank approximation of the image
+    compress :: Int -> Picture -> Picture
+    compress rate (r, g, b) = (f r, f g, f b)
+      where
+        k = cols r - rate
+        f m =
+          let (u, s, v) = svd m
+              si = diagRect 0 s (rows m) (cols m)
+              (mu, ms, mv) = (u ?? (All, Take k), si ?? (Take k, Take k), (tr v) ?? (Take k, All))
+          in mu <> ms <> mv
 
     bound (l, u) x = max l $ min u x
     pixelBound = bound (0, 255)

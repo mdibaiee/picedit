@@ -11,6 +11,7 @@ module Main where
                          , argContrast :: Double
                          , argGamma :: Int
                          , argBrightness :: Double
+                         , argCompress :: Int
                          }
 
   opts = Options { file = ""
@@ -22,6 +23,7 @@ module Main where
                  , argContrast = 0
                  , argGamma = 1
                  , argBrightness = 0
+                 , argCompress = 0
                  }
 
   main :: IO ()
@@ -39,6 +41,7 @@ module Main where
         putStrLn "  --rotate <n> - rotate image by n degrees"
         putStrLn "  --grayscale - turn the image grayscale"
         putStrLn "  --invert - invert (negative) the image"
+        putStrLn "  --compress <n> - approximate the (width - n)-th rank of image using SVD, note: this is not size compression, a number between 0 (no compression) and image width (full compression)"
         putStrLn "  --output <filename> - output name, defaults to output.png"
       else do 
         let options = parseArgs args opts
@@ -49,13 +52,14 @@ module Main where
           Left err -> print err
           Right p -> do
             let edited = rotate (argRotate options) Nothing 
-                      . fade (argFade options / 100)
-                      . contrast (argContrast options)
-                      . gamma (argGamma options)
-                      . brightness (argBrightness options)
-                      . conditionalFn grayscale (argGrayscale options) 
-                      . conditionalFn invert (argInvert options) $ p
-            writePicturePng "output.png" edited
+                       . fade (argFade options / 100)
+                       . contrast (argContrast options)
+                       . gamma (argGamma options)
+                       . brightness (argBrightness options)
+                       . conditionalFn grayscale (argGrayscale options) 
+                       . conditionalFn invert (argInvert options)
+                       . compress (argCompress options) $ p
+            writePicturePng (output options) edited
             
         return ()
 
@@ -72,6 +76,7 @@ module Main where
   parseArgs ("--contrast":n:rest) opts = parseArgs rest (opts { argContrast = read n })
   parseArgs ("--brightness":n:rest) opts = parseArgs rest (opts { argBrightness = read n })
   parseArgs ("--gamma":n:rest) opts = parseArgs rest (opts { argGamma = read n })
+  parseArgs ("--compress":n:rest) opts = parseArgs rest (opts { argCompress = read n })
   parseArgs ("--output":n:rest) opts = parseArgs rest (opts { output = n })
   parseArgs (name:rest) opts = parseArgs rest (opts { file = name })
 
