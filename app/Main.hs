@@ -1,5 +1,5 @@
 module Main where
-  import Picture
+  import Data.Picture
   import System.Environment
 
   data Options = Options { file :: FilePath
@@ -27,7 +27,6 @@ module Main where
   main :: IO ()
   main = do
     args <- getArgs
-    print args
 
     if null args
       then do

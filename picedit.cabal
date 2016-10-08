@@ -2,12 +2,12 @@ name:                picedit
 version:             0.1.0.0
 synopsis:            simple image manipulation functions
 description:         Simple set of functions for image manipulation: contrast, brightnesss, rotation, etc.
-homepage:            https://github.com/mdibaiee/image-editor-hs#readme
+homepage:            https://github.com/mdibaiee/picedit#readme
 license:             GPL-3
 license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2016 Author name here
+author:              Mahdi Dibaiee
+maintainer:          mdibaiee@aol.com
+copyright:           2016 Mahdi Dibaiee
 category:            Image, Picture, Matrix
 build-type:          Simple
 -- extra-source-files:
@@ -15,14 +15,14 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Picture
+  exposed-modules:     Data.Picture
   build-depends:       base >= 4.7 && < 5,
                        JuicyPixels >= 3.2.8 && < 3.3,
                        hmatrix >= 0.17.0.2 && < 0.18,
                        vector >= 0.11.0.0 && < 0.12
   default-language:    Haskell2010
 
-executable image-editor-hs-exe
+executable picedit
   hs-source-dirs:      app
   main-is:             Main.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N

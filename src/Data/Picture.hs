@@ -2,18 +2,27 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE TypeFamilies #-}
 
-module Picture ( grayscale
-               , readPicture
-               , fromImage
-               , toImage
-               , writePicturePng
-               , fade
-               , rotate
-               , contrast
-               , brightness
-               , gamma
-               , invert
-               )
+{-|
+Module      : Picture
+Description : manipulation functions
+Copyright   : (c) Mahdi Dibaiee, 2016
+License     : GPL-3
+Maintainer  : mdibaiee@aol.com
+Stability   : experimental
+Portability : POSIX
+-}
+module Data.Picture ( grayscale
+                    , readPicture
+                    , fromImage
+                    , toImage
+                    , writePicturePng
+                    , fade
+                    , rotate
+                    , contrast
+                    , brightness
+                    , gamma
+                    , invert
+                    )
   where
 
     import Codec.Picture
@@ -21,10 +30,7 @@ module Picture ( grayscale
     import qualified Data.Vector.Storable as V
     import System.IO
     import Data.Maybe
-    import Debug.Trace
 
-    -- RGBA
-    
     -- | 'Picture' type is just a triple of color channel matrices: (R, G, B)
     type Picture = (Matrix Double, Matrix Double, Matrix Double)
 

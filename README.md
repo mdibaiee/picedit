@@ -21,7 +21,7 @@ Options:
 
 Library
 -------
-Documentation available at hackage
+[Documentation available at hackage](https://hackage.haskell.org/package/picedit-0.1.0.0/docs/Data-Picture.html)
 
 ```haskell
 import Picture
