@@ -1,5 +1,5 @@
 name:                picedit
-version:             0.1.1.1
+version:             0.1.1.2
 synopsis:            simple image manipulation functions
 description:         Simple set of functions for image manipulation: contrast, brightnesss, rotation, etc.
 homepage:            https://github.com/mdibaiee/picedit#readme
@@ -19,7 +19,7 @@ library
   build-depends:       base >= 4.7 && < 5,
                        JuicyPixels >= 3.2.8 && < 3.3,
                        hmatrix >= 0.17.0.2 && < 0.19,
-                       vector >= 0.11.0.0 && < 0.12
+                       vector >= 0.11.0.0 && < 0.13
   default-language:    Haskell2010
 
 executable picedit
