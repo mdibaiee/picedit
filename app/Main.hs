@@ -1,6 +1,7 @@
 module Main where
   import Data.Picture
   import System.Environment
+  import Data.Either
 
   data Options = Options { file :: FilePath
                          , output :: FilePath
@@ -47,6 +48,7 @@ module Main where
         let options = parseArgs args opts
 
         pic <- readPicture (file options)
+        Right other <- readPicture ("output.png")
 
         case pic of
           Left err -> print err
