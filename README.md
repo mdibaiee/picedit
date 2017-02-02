@@ -30,7 +30,7 @@ stack exec picedit -- dreamboy.jpg --grayscale --contrast 180 --gamma 2 --rotate
 <img width='45%' src='https://github.com/mdibaiee/picedit/blob/master/dreamboy.jpg?raw=true' />
 <img width='45%' src='https://github.com/mdibaiee/picedit/blob/master/output.png?raw=true' />
 
-Embedding images:
+Embedding images (the zombie is embedded at top left, 100x + 10y):
 
 <img width='5%' src='https://github.com/mdibaiee/picedit/blob/master/45.png?raw=true' />
 <img width='40%' src='https://github.com/mdibaiee/picedit/blob/master/output.png?raw=true' />
