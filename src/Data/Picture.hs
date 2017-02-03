@@ -22,6 +22,8 @@ module Data.Picture ( Picture
                     , invert
                     , compress
                     , embed
+                    , resize
+                    , Data.Picture.scale
                     -- * Converting between Image and Picture
                     , fromImage
                     , toImage
@@ -169,6 +171,29 @@ module Data.Picture ( Picture
 
         f b lm = (b * (cmap (1-) scaledAlpha)) + (lm * scaledAlpha)
         maxAlpha = (rows ba><cols ba) $ zipWith max (toList . flatten $ ba) (toList . flatten . fit $ la)
+
+    -- | Resize an image using nearest-neighbor interpolation
+    resize :: (Int, Int) -> Picture -> Picture
+    resize (sWidth, sHeight) (r, g, b, a) = (f r, f g, f b, f a)
+      where
+        initial = vector [0..fromIntegral sWidth * fromIntegral sHeight - 1]
+        (width, height) = (rows r, cols r)
+        (xRatio, yRatio) = (fromIntegral width / fromIntegral sWidth, fromIntegral height / fromIntegral sHeight)
+        f m = tr $ reshape sWidth $ V.map replace initial
+          where
+            v = flatten (tr m)
+            replace index =
+              let (x, y) = (fromIntegral $ floor index `mod` sWidth, fromIntegral . floor $ index / fromIntegral sWidth)
+                  (px, py) = (floor $ x * xRatio, floor $ y * yRatio)
+              in v ! (py * width + px)
+
+    -- | Scale an image using the resize function
+    scale :: Double -> Picture -> Picture
+    scale 1 p = p
+    scale s (r, g, b, a) = resize (floor $ s * width, floor $ s * height) (r, g, b, a)
+      where
+        (width, height) = (fromIntegral $ rows r, fromIntegral $ cols r)
+
 
     bound (l, u) x = max l $ min u x
     pixelBound = bound (0, 255)

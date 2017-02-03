@@ -2,6 +2,7 @@ module Main where
   import Data.Picture
   import System.Environment
   import Data.Either
+  import Numeric.LinearAlgebra (rows, cols)
 
   data Options = Options { file :: FilePath
                          , output :: FilePath
@@ -13,6 +14,7 @@ module Main where
                          , argGamma :: Int
                          , argBrightness :: Double
                          , argCompress :: Int
+                         , argScale :: Double
                          }
 
   opts = Options { file = ""
@@ -25,6 +27,7 @@ module Main where
                  , argGamma = 1
                  , argBrightness = 0
                  , argCompress = 0
+                 , argScale = 1
                  }
 
   main :: IO ()
@@ -42,6 +45,7 @@ module Main where
         putStrLn "  --rotate <n> - rotate image by n degrees"
         putStrLn "  --grayscale - turn the image grayscale"
         putStrLn "  --invert - invert (negative) the image"
+        putStrLn "  --scale <n> - scale the image using nearest-neighbor interpolation"
         putStrLn "  --compress <n> - approximate the (width - n)-th rank of image using SVD, note: this is not size compression, a number between 0 (no compression) and image width (full compression)"
         putStrLn "  --output <filename> - output name, defaults to output.png"
       else do 
@@ -60,6 +64,7 @@ module Main where
                        . brightness (argBrightness options)
                        . conditionalFn grayscale (argGrayscale options) 
                        . conditionalFn invert (argInvert options)
+                       . scale (argScale options)
                        . compress (argCompress options) $ p
             writePicturePng (output options) edited
             
@@ -79,6 +84,7 @@ module Main where
   parseArgs ("--brightness":n:rest) opts = parseArgs rest (opts { argBrightness = read n })
   parseArgs ("--gamma":n:rest) opts = parseArgs rest (opts { argGamma = read n })
   parseArgs ("--compress":n:rest) opts = parseArgs rest (opts { argCompress = read n })
+  parseArgs ("--scale":n:rest) opts = parseArgs rest (opts { argScale = read n })
   parseArgs ("--output":n:rest) opts = parseArgs rest (opts { output = n })
   parseArgs (name:rest) opts = parseArgs rest (opts { file = name })
 
