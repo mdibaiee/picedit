@@ -178,13 +178,14 @@ module Data.Picture ( Picture
       where
         initial = vector [0..fromIntegral sWidth * fromIntegral sHeight - 1]
         (width, height) = (rows r, cols r)
-        (xRatio, yRatio) = (fromIntegral width / fromIntegral sWidth, fromIntegral height / fromIntegral sHeight)
+        factor = 2 ^ 16
+        (xRatio, yRatio) = (width * factor `div` sWidth + 1, height * factor `div` sHeight + 1)
         f m = tr $ reshape sWidth $ V.map replace initial
           where
             v = flatten (tr m)
             replace index =
-              let (x, y) = (fromIntegral $ floor index `mod` sWidth, fromIntegral . floor $ index / fromIntegral sWidth)
-                  (px, py) = (floor $ x * xRatio, floor $ y * yRatio)
+              let (x, y) = (floor index `mod` sWidth, floor index `div` sWidth)
+                  (px, py) = (x * xRatio `div` factor, y * yRatio `div` factor)
               in v ! (py * width + px)
 
     -- | Scale an image using the resize function
