@@ -177,12 +177,12 @@ module Data.Picture ( Picture
     resize (sWidth, sHeight) (r, g, b, a) = (f r, f g, f b, f a)
       where
         initial = vector [0..fromIntegral sWidth * fromIntegral sHeight - 1]
-        (width, height) = (rows r, cols r)
+        (width, height) = (cols r, rows r)
         factor = 2 ^ 16
         (xRatio, yRatio) = (width * factor `div` sWidth + 1, height * factor `div` sHeight + 1)
-        f m = tr $ reshape sWidth $ V.map replace initial
+        f m = reshape sWidth $ V.map replace initial
           where
-            v = flatten (tr m)
+            v = flatten m
             replace index =
               let (x, y) = (floor index `mod` sWidth, floor index `div` sWidth)
                   (px, py) = (x * xRatio `div` factor, y * yRatio `div` factor)
@@ -193,7 +193,7 @@ module Data.Picture ( Picture
     scale 1 p = p
     scale s (r, g, b, a) = resize (floor $ s * width, floor $ s * height) (r, g, b, a)
       where
-        (width, height) = (fromIntegral $ rows r, fromIntegral $ cols r)
+        (width, height) = (fromIntegral $ cols r, fromIntegral $ rows r)
 
 
     bound (l, u) x = max l $ min u x
