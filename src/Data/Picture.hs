@@ -139,7 +139,7 @@ module Data.Picture ( Picture
         -- move them back to the origin
         movedIndices = map (\[x, y] -> [x + originX, y + originY]) rotatedIndices
 
-        f m = reshape (cols m) $ fromList $ map (\[x, y] -> if y < 0 || y >= rows r || x < 0 || x >= cols r then 255 else m `atIndex` (y, x)) movedIndices
+        f m = reshape (cols m) $ fromList $ map (\[x, y] -> if y < 0 || y >= rows r || x < 0 || x >= cols r then 0 else m `atIndex` (y, x)) movedIndices
 
     -- | Compress the image using SVD
     -- note: this is not size compression, it's just a k-rank approximation of the image

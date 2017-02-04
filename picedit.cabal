@@ -1,5 +1,5 @@
 name:                picedit
-version:             0.2.1.0
+version:             0.2.2.0
 synopsis:            simple image manipulation functions
 description:         Simple set of functions for image manipulation: contrast, brightnesss, rotation, etc.
 homepage:            https://github.com/mdibaiee/picedit#readme
